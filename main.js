@@ -1,3 +1,17 @@
+const express = require('express')
+const app = express()
+const port = 3000
+var fs = require('fs');
+var template = require('./lib/template.js');
+
+// get : route, routing
+app.get('/', (req, res) => res.send('Hello World!'))
+
+app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
+
+
+/*
+// 이전 코드
 var http = require('http');
 var fs = require('fs');
 var url = require('url');
@@ -10,6 +24,7 @@ var app = http.createServer(function(request,response) {
     var _url = request.url;
     var queryData = url.parse(_url, true).query;
     var pathname = url.parse(_url, true).pathname;
+    // if문 : route, routing
     if (pathname === '/') {
       if (queryData.id === undefined) {
         fs.readdir('./data', function(error, filelist) {
@@ -150,3 +165,4 @@ var app = http.createServer(function(request,response) {
     }
 });
 app.listen(3000);
+*/
