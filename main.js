@@ -12,23 +12,24 @@ var compression = require('compression');
 
 app.use(bodyParser.urlencoded({ extended: false })); // Middleware - body parser
 app.use(compression()); // Middleware - compression
-
-// Make Our Middleware
 app.get('*', function(request, response, next) { // get방식의 요청에 대해서만 파일 목록을 가져오도록 함
   fs.readdir('./data', function(error, filelist) {
     request.list = filelist;
     next();
   });
 });
+app.use(express.static('public')); // public 디렉토리 안에서 static파일을 찾음
 
 // get : route, routing
-// app.get('/', (req, res) => res.send('Hello World!'))
-app.get('/', function(requset, response) { // WEB
+app.get('/', function(request, response) { // WEB
   var title = 'Welcome';
   var description = 'Hello, Node.js';
   var list = template.list(request.list);
   var html = template.HTML(title, list,
-    `<h2>${title}</h2>${description}`,
+    `
+    <h2>${title}</h2>${description}
+    <img src="/images/hello.jpg" style="width:300px; display:block; margin-top:10px">
+    `,
     `<a href="/create">create</a>`
   );
   response.send(html);
